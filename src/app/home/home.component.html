@@ -1,3 +1,43 @@
-<p>
-  home works!
-</p>
+  <header class="jumbotron hero-spacer">
+    <h1>{{title}}</h1>
+    <p>Your basket amounts to {{total | currency: 'CAD' : 'symbol' : '.2'}}</p>
+    <p><a class="btn btn-primary btn-large" routerlink='/basket'>See my basket</a></p>
+  </header>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <h2>Last products</h2>
+      Sort by:
+      <div class="btn-group-field" role="group">
+        <button class="btn btn-default" (click)="sortKey = 'title'" >Title</button>
+          <button class=" btn btn-default" (click)="sortKey = 'price'" >Price</button>
+          <button class=" btn btn-default" (click)="sortKey = 'stock'" >Stock</button>
+          <!--
+            <button class="btn btn-default" (click)="sortKey = 'title'" [ngClass]="{'selected':isFieldSelected('title')}>Title</button>
+                    <button class=" btn btn-default" (click)="sortKey = 'price'" [ngClass]="{'selected':isFieldSelected('price')}>Price</button>
+                    <button class=" btn btn-default" (click)="sortKey = 'stock'"
+            [ngClass]="{'selected':isFieldSelected('stock')}>Stock</button>-->
+        </div>
+        Order:
+        <div class=" btn-group-order" role="group1">
+          <button class="btn btn-default" (click)="sortOrder = 'asc'" >asc</button>
+          <button class=" btn btn-default" (click)="sortOrder = 'desc'" >desc</button>
+          <!--<button class="btn btn-default" (click)="sortOrder = 'asc'" [ngClass]="{'selected':isSortSelected('asc')}>asc</button>
+                    <button class=" btn btn-default" (click)="sortOrder = 'desc'"
+            [ngClass]="{'selected':isSortSelected('desc')}>desc</button>
+            -->
+        </div>
+    </div>
+</div>
+<div class=" row text-center">
+            <!-- async when component is destroyed unsubscribe will be done automatically-->
+            <ng-template ngFor [ngForOf]="products$ | async | sort : sortKey : sortOrder" let-product let-i="index">
+              <ng-template [ngIf]="isAvailable(product)">
+                <app-product [data]=product (addToBasket)="changeBasket($event)"></app-product>
+              </ng-template>
+            </ng-template>
+      </div>
+
+      <hr>

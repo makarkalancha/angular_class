@@ -3,13 +3,20 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { ProductComponent } from './product/product.component';
 import { NgModule, LOCALE_ID} from '@angular/core';
-import {registerLocaleData} from '@angular/common';
+import {registerLocaleData, APP_BASE_HREF} from '@angular/common';
 import localeEnCa from '@angular/common/locales/en-CA';
 import { SortPipe } from './pipes/sort.pipe';
 import {HttpClientModule} from '@angular/common/http';
-import { HomeComponent } from './home/home.component'
+import { HomeComponent } from './home/home.component';
+import { BasketComponent } from './basket/basket.component'
+import { RouterModule, Routes } from '@angular/router';
 
 registerLocaleData(localeEnCa, 'en-CA');
+
+const routes : Routes = [
+  { path: '', component: HomeComponent},
+  { path: 'basket', component: BasketComponent }
+];
 
 @NgModule({
   declarations: [
@@ -17,13 +24,19 @@ registerLocaleData(localeEnCa, 'en-CA');
     MenuComponent,
     ProductComponent,
     SortPipe,
-    HomeComponent
+    HomeComponent,
+    BasketComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [
+    {
+      provide: APP_BASE_HREF,
+      useValue: '/'
+    },
     {
       provide:'appTitle',
       useValue: 'hello world'
@@ -40,3 +53,4 @@ registerLocaleData(localeEnCa, 'en-CA');
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+https://github.com/makarkalancha/tp-angular-en/tree/labs/8-router/src/app
