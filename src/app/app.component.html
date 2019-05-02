@@ -3,7 +3,7 @@
 
 <header class="jumbotron hero-spacer">
   <h1>{{title}}</h1>
-  <p>Your basket amounts to {{total}}€</p>
+  <p>Your basket amounts to {{total | currency: 'CAD' : 'symbol' : '.2'}}</p>
   <p><a class="btn btn-primary btn-large">See my basket</a></p>
 </header>
 
@@ -12,10 +12,18 @@
 <div class="row">
     <div class="col-lg-12">
         <h2>Last products</h2>
+        Sort by:
+        <div class="btn-group" role="group">
+          <button class="btn btn-default" (click)="sortKey = 'title'">Title</button>
+          <button class="btn btn-default" (click)="sortKey = 'price'">Price</button>
+          <button class="btn btn-default" (click)="sortKey = 'stock'">Stock</button>
+          <button class="btn btn-default" (click)="sortOrder = 'asc'">asc</button>
+          <button class="btn btn-default" (click)="sortOrder = 'desc'">desc</button>
+        </div>
     </div>
 </div>
 <div class="row text-center">
-    <ng-template ngFor [ngForOf]="productList" let-product let-i="index">
+    <ng-template ngFor [ngForOf]="productList | sort : sortKey : sortOrder" let-product let-i="index">
       <ng-template [ngIf]="isAvailable(product)">
         <app-product [data]=product (addToBasket)="changeBasket($event)"></app-product>
       </ng-template>

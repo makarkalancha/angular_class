@@ -1,16 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { ProductComponent } from './product/product.component';
-import { ProductService } from './services/product.service';
+import { NgModule, LOCALE_ID} from '@angular/core';
+import {registerLocaleData} from '@angular/common';
+import localeEnCa from '@angular/common/locales/en-CA';
+import { SortPipe } from './pipes/sort.pipe';
+
+registerLocaleData(localeEnCa, 'en-CA');
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
-    ProductComponent
+    ProductComponent,
+    SortPipe
   ],
   imports: [
     BrowserModule
@@ -19,6 +23,10 @@ import { ProductService } from './services/product.service';
     {
       provide:'appTitle',
       useValue: 'hello world'
+    },
+    {
+      provide: 'LOCALE_ID',
+      useValue: 'en-CA'
     }
   ],
   bootstrap: [AppComponent]

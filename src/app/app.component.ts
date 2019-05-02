@@ -11,6 +11,8 @@ import { CustomerService } from './services/customer.service';
 export class AppComponent {
   total:number = 0;
   productList: Array<Product>;
+  sortKey: keyof Product = 'title';
+  sortOrder: String = 'asc';
 
   constructor(
     private productService: ProductService, 
