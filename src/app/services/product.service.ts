@@ -1,46 +1,28 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Product } from '../model/product';
+import { HttpClient } from '@angular/common/http';
+import { pipe, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  productList: Array<Product> = [
-      { 
-        "title": "Men Sweatshirt", 
-        "description": "C0D1NG_TH3_W0RLD BIO HOODIE - MEN", "photo": 
-        "https://s3.eu-central-1.amazonaws.com/balibart-s3/Products/5acf344514006a7fe670e2eb/Mockups/front.png", 
-        "price": 39, 
-        "stock": 5 
-      },
-      { 
-        "title": "Men T-Shirt", 
-        "description": "BIO T-SHIRT WITH CREWNECK - MEN.", 
-        "photo": "https://s3.eu-central-1.amazonaws.com/balibart-s3/Products/5b2911e4ab33424aec592bd6/Mockups/front.png",
-        "price": 19, 
-        "stock": 3 
-      },
-      { 
-        "title": "T-Shirt women", 
-        "description": "BIO T-SHIRT WITH CREWNECK - WOMEN.", 
-        "photo": "https://s3.eu-central-1.amazonaws.com/balibart-s3/Products/5b290d26ab33424aec592bd4/Mockups/front.png", 
-        "price": 30, 
-        "stock": 2 
-      },
-      { 
-        
-        "title": "Tote bag", 
-        "description": "C0D1NG_TH3_W0RLD, BIO TOTE BAG.", 
-        "photo": "https://s3.eu-central-1.amazonaws.com/balibart-s3/Products/5acf160814006a7fe670e2dd/Mockups/front.png", 
-        "price": 12.5,
-        "stock": 1 
-      }
-    ];
+  private readonly API_URL = this.API_BASE_URL+'/products';
 
-  constructor() { }
+  constructor(@Inject('API_BASE_URL') private API_BASE_URL : String, private httpClient : HttpClient) { }
 
-  getProducts(): Array<Product> {
-    return this.productList;
+  getProducts(): Observable<Product[]> {
+    return this.httpClient.get(this.API_URL)
+      .pipe(
+        map((products:any[]) => 
+          products.map(
+            product => new Product(product.title, product.description, product.photo, product.number, product.stock)
+          )
+        )
+      )
+    ;
   }
 
   isTheLast(product: Product): boolean {

@@ -6,6 +6,8 @@ import { NgModule, LOCALE_ID} from '@angular/core';
 import {registerLocaleData} from '@angular/common';
 import localeEnCa from '@angular/common/locales/en-CA';
 import { SortPipe } from './pipes/sort.pipe';
+import {HttpClientModule} from '@angular/common/http';
+import { HomeComponent } from './home/home.component'
 
 registerLocaleData(localeEnCa, 'en-CA');
 
@@ -14,10 +16,12 @@ registerLocaleData(localeEnCa, 'en-CA');
     AppComponent,
     MenuComponent,
     ProductComponent,
-    SortPipe
+    SortPipe,
+    HomeComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
   providers: [
     {
@@ -27,6 +31,10 @@ registerLocaleData(localeEnCa, 'en-CA');
     {
       provide: 'LOCALE_ID',
       useValue: 'en-CA'
+    },
+    {
+      provide: 'API_BASE_URL',
+      useValue: 'http://localhost:8080/rest'
     }
   ],
   bootstrap: [AppComponent]
