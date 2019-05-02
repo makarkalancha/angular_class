@@ -53,4 +53,6 @@ const routes : Routes = [
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+https://github.com/makarkalancha/tp-angular-en/branches
 https://github.com/makarkalancha/tp-angular-en/tree/labs/8-router/src/app
+https://gist.github.com/ccocoual/b526ce535092f52c0250c019d522e244
